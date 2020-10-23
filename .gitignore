@@ -8,3 +8,12 @@
 *.iml
 .classpath
 .project
+
+# Build
+/coverage/
+/dist/
+/node_modules/
+
+# Logs
+*.log
+npm-debug.log*
