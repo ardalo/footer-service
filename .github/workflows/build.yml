@@ -33,3 +33,20 @@ jobs:
       run: npm run build
     - name: Run tests
       run: npm run test
+  sonarcloud:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: SonarCloud Scan
+      uses: sonarsource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+        args: >
+          -Dsonar.organization=ardalo
+          -Dsonar.projectKey=ardalo_footer-service
+          -Dsonar.python.coverage.reportPaths=coverage/cobertura-coverage.xml
+          -Dsonar.sources=src/

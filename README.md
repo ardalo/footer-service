@@ -1,5 +1,7 @@
 # Ardalo Digital Platform Frontpage Service
 ![Build Status](https://github.com/ardalo/footer-service/workflows/Build/badge.svg)
+[![Code Coverage](https://sonarcloud.io/api/project_badges/measure?project=ardalo_footer-service&metric=coverage)](https://sonarcloud.io/dashboard?id=ardalo_footer-service)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=ardalo_footer-service&metric=ncloc)](https://sonarcloud.io/dashboard?id=ardalo_footer-service)
 
 Provides the footer for all public pages of the Ardalo Digital Platform.
 
