@@ -1,4 +1,6 @@
 # Ardalo Digital Platform Frontpage Service
+![Build Status](https://github.com/ardalo/footer-service/workflows/Build/badge.svg)
+
 Provides the footer for all public pages of the Ardalo Digital Platform.
 
 ## Tech Info
@@ -27,14 +29,6 @@ __NodeJS Service based on NestJS and Typescript__
 * Run all tests
   ```console
   $ npm run test
-  ```
-* Run unit tests
-  ```console
-  $ npm run test:unit
-  ```
-* Run e2e tests
-  ```console
-  $ npm run test:e2e
   ```
 * Generate Code Coverage Report. HTML Report can be found in `./coverage/index.html`
   ```console
