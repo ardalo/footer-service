@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 10.x, 12.x, 14.x ]
+        node-version: [ 12.x, 14.x ]
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
@@ -31,8 +31,10 @@ jobs:
       run: npm run lint
     - name: Build application
       run: npm run build
-    - name: Run tests
-      run: npm run test
+    - name: Run unit tests
+      run: npm run test:unit
+    - name: Run e2e tests
+      run: npm run test:e2e
   sonarcloud:
     runs-on: ubuntu-latest
     steps:
