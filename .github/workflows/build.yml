@@ -68,3 +68,4 @@ jobs:
             -Dsonar.projectKey=ardalo_footer-service
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
             -Dsonar.sources=src/
+            -Dsonar.coverage.exclusions=src/**/*.spec.ts,src/**/*.e2e-spec.ts
