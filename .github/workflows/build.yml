@@ -66,5 +66,5 @@ jobs:
           args: >
             -Dsonar.organization=ardalo
             -Dsonar.projectKey=ardalo_footer-service
-            -Dsonar.python.coverage.reportPaths=coverage/cobertura-coverage.xml
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
             -Dsonar.sources=src/

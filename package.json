@@ -39,7 +39,7 @@
     "eslint-plugin-import": "2.22.1",
     "jest": "26.6.1",
     "supertest": "5.0.0",
-    "ts-jest": "26.2.0",
+    "ts-jest": "26.4.1",
     "ts-loader": "8.0.7",
     "ts-node": "9.0.0",
     "tsconfig-paths": "3.9.0",
@@ -59,7 +59,7 @@
     "coverageDirectory": "../coverage",
     "coverageReporters": [
       "html",
-      "cobertura"
+      "lcov"
     ],
     "testEnvironment": "node"
   }
