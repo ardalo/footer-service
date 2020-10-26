@@ -12,6 +12,7 @@ __NodeJS Service based on NestJS and Typescript__
 * Typescript
 * npm
 * Jest
+* Prometheus Metrics
 * Static Code Analysis via SonarCloud
 * Docker
 * CI/CD: GitHub Actions
