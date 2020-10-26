@@ -8,7 +8,7 @@ Provides the footer for all public pages of the Ardalo Digital Platform.
 ## Tech Info
 __NodeJS Service based on NestJS and Typescript__
 * NodeJS
-* NestJS
+* NestJS with fastify
 * Typescript
 * npm
 * Jest
