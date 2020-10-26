@@ -1,0 +1,7 @@
+version: '3'
+services:
+  footer-service:
+    build: .
+    image: ardalo-digital-platform/footer-service:latest
+    ports:
+      - 8082:8082
