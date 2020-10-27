@@ -4,7 +4,8 @@ import PrometheusClient = require('prom-client');
 @Controller()
 export default class MetricsController {
   constructor() {
-    PrometheusClient.collectDefaultMetrics();
+    PrometheusClient.register.clear();
+    PrometheusClient.collectDefaultMetrics({ register: PrometheusClient.register });
   }
 
   @Header('Content-Type', PrometheusClient.register.contentType)
