@@ -13,6 +13,7 @@ __NodeJS Service based on NestJS and Typescript__
 * npm
 * Jest
 * Prometheus Metrics
+* Swagger UI
 * Static Code Analysis via SonarCloud
 * Docker
 * CI/CD: GitHub Actions
@@ -26,7 +27,7 @@ __NodeJS Service based on NestJS and Typescript__
   ```console
   $ npm install
   ```
-* Start application
+* Start application and find API docs at `http://localhost:8082/`
   ```console
   $ npm run start
   ```
@@ -38,3 +39,7 @@ __NodeJS Service based on NestJS and Typescript__
   ```console
   $ npm run test:cov
   ```
+
+## API Documentation
+The OpenAPI documentation (Swagger UI) can be found at the root path of the service (e.g. `http://localhost:8082/`).
+It provides an overview of all endpoints.
