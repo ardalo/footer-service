@@ -18,6 +18,10 @@ __NodeJS Service based on NestJS and Typescript__
 * CI/CD: GitHub Actions
 
 ## Quick Start
+* Run via Docker using `docker-compose` and find API docs at `http://localhost:8082/`
+  ```console
+  $ docker-compose build && docker-compose up
+  ```
 * Install dependencies
   ```console
   $ npm install
@@ -33,8 +37,4 @@ __NodeJS Service based on NestJS and Typescript__
 * Generate Code Coverage Report. HTML Report can be found in `./coverage/index.html`
   ```console
   $ npm run test:cov
-  ```
-* Run via Docker using `docker-compose` and find API docs at `http://localhost:8082/`
-  ```console
-  $ docker-compose build && docker-compose up
   ```
