@@ -6,7 +6,7 @@ export default class SwaggerUiConfigurer {
   static configure(app: NestFastifyApplication): void {
     SwaggerModule.setup('/', app, SwaggerModule.createDocument(app, new DocumentBuilder()
       .setTitle('Footer Service')
-      .setDescription(`<a href="${app.get(ConfigService).get('app.documentation-url')}" target="_blank">footer-service documentation</a>`)
+      .setDescription(`<a href="${app.get(ConfigService).get('app.documentation-url')}" target="_blank">Go to documentation</a>`)
       .build()));
   }
 }
