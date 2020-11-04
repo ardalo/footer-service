@@ -14,8 +14,8 @@ describe('MetricsController (e2e)', () => {
     await app.init();
   });
 
-  it('GET /metrics should return metrics', () => {
-    return app.inject({ method: 'GET', url: '/metrics' })
+  it('should provide prometheus metrics', () => {
+    return app.inject({ method: 'GET', url: '/prometheus-metrics' })
       .then(({ statusCode, headers, payload }) => {
         expect(statusCode).toBe(200);
         expect(headers['content-type']).toMatch(/^text\/plain; /);
