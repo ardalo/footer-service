@@ -8,7 +8,7 @@ import { appConfigValidationSchema } from './app.config';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['.env.default'],
+      envFilePath: ['.env.dist'],
       isGlobal: true,
       validationSchema: Joi.object({
           ...appConfigValidationSchema
