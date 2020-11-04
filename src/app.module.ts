@@ -3,16 +3,13 @@ import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import MetricsModule from './metrics/metrics.module';
 import HealthModule from './health/health.module';
-import { appConfig, appConfigValidationSchema } from './app.config';
+import { appConfigValidationSchema } from './app.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: ['.env.default'],
       isGlobal: true,
-      load: [
-        appConfig
-      ],
       validationSchema: Joi.object({
           ...appConfigValidationSchema
         }
