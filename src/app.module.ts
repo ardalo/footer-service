@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
+import { LoggerModule } from 'nestjs-pino';
 import MetricsModule from './metrics/metrics.module';
 import HealthModule from './health/health.module';
 import { appConfigValidationSchema } from './app.config';
@@ -20,6 +21,19 @@ import { appConfigValidationSchema } from './app.config';
       }
     }),
     HealthModule,
+    LoggerModule.forRootAsync({
+      providers: [ConfigService],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        pinoHttp: {
+          level: config.get('LOGGER_LEVEL'),
+          formatters: {
+            level: (level: string, number: number) => ({ level: level })
+          }
+        },
+        renameContext: 'className'
+      })
+    }),
     MetricsModule
   ]
 })

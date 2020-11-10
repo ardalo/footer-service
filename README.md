@@ -14,6 +14,7 @@ __NodeJS Service based on NestJS and Typescript__
 * Jest
 * Prometheus Metrics
 * Swagger UI
+* Access and Application Logs in JSON format
 * Static Code Analysis via SonarCloud
 * Docker
 * CI/CD: GitHub Actions

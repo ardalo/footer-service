@@ -10,5 +10,11 @@ export const appConfigValidationSchema = {
     .description('The port to expose the application at'),
   APP_DOCUMENTATION_URL: Joi.string()
     .required()
-    .description('URL where to find the application documentation')
+    .description('URL where to find the application documentation'),
+
+  LOGGER_LEVEL: Joi.string()
+    .valid('debug', 'info', 'warn', 'error')
+    .insensitive()
+    .required()
+    .description('Log level')
 };
