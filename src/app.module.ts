@@ -2,9 +2,11 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { LoggerModule } from 'nestjs-pino';
+import { APP_FILTER } from '@nestjs/core';
 import MetricsModule from './metrics/metrics.module';
 import HealthModule from './health/health.module';
 import { appConfigValidationSchema } from './app.config';
+import { UnhandledExceptionFilter } from './error/unhandled-exception.filter';
 
 @Module({
   imports: [
@@ -35,6 +37,12 @@ import { appConfigValidationSchema } from './app.config';
       })
     }),
     MetricsModule
+  ],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: UnhandledExceptionFilter
+    }
   ]
 })
 export class AppModule {}
