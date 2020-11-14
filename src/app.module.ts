@@ -6,7 +6,7 @@ import { APP_FILTER } from '@nestjs/core';
 import MetricsModule from './metrics/metrics.module';
 import HealthModule from './health/health.module';
 import { appConfigValidationSchema } from './app.config';
-import { UnhandledExceptionFilter } from './error/unhandled-exception.filter';
+import { GlobalExceptionFilter } from './error/global-exception.filter';
 
 @Module({
   imports: [
@@ -41,7 +41,7 @@ import { UnhandledExceptionFilter } from './error/unhandled-exception.filter';
   providers: [
     {
       provide: APP_FILTER,
-      useClass: UnhandledExceptionFilter
+      useClass: GlobalExceptionFilter
     }
   ]
 })

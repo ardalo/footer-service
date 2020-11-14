@@ -42,5 +42,5 @@ __NodeJS Service based on NestJS and Typescript__
   ```
 
 ## API Documentation
-The OpenAPI documentation (Swagger UI) can be found at the root path of the service (e.g. `http://localhost:8082/`).
+Swagger UI is accessible via `/apidoc` (e.g. http://localhost:8082/apidoc).
 It provides an overview of all endpoints.

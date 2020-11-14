@@ -4,7 +4,7 @@ import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify
 import { ConfigService } from '@nestjs/config';
 import { Logger } from 'nestjs-pino';
 import { AppModule } from './app.module';
-import SwaggerUiConfigurer from './swaggerui/swagger-ui.configurer';
+import ApiDocumentationConfigurer from './apidoc/api-documentation.configurer';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -16,7 +16,7 @@ async function bootstrap() {
     { logger: false }
   );
   app.useLogger(app.get(Logger));
-  SwaggerUiConfigurer.configure(app);
+  ApiDocumentationConfigurer.configure(app);
   await app.listen(app.get(ConfigService).get('APP_PORT'), '0.0.0.0');
 }
 bootstrap();

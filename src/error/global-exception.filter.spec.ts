@@ -1,8 +1,8 @@
 import { ArgumentsHost, BadRequestException, HttpException } from '@nestjs/common';
-import { UnhandledExceptionFilter } from './unhandled-exception.filter';
+import { GlobalExceptionFilter } from './global-exception.filter';
 
-describe('UnhandledExceptionFilter', () => {
-  const unhandledExceptionFilter: UnhandledExceptionFilter = new UnhandledExceptionFilter();
+describe('GlobalExceptionFilter', () => {
+  const globalExceptionFilter: GlobalExceptionFilter = new GlobalExceptionFilter();
 
   const response = {
     code: jest.fn().mockReturnThis(),
@@ -21,7 +21,7 @@ describe('UnhandledExceptionFilter', () => {
   });
 
   it('should send response for Error',  () => {
-    unhandledExceptionFilter.catch(new Error('Foo Bar'), argumentHost);
+    globalExceptionFilter.catch(new Error('Foo Bar'), argumentHost);
 
     expect(response.code).toHaveBeenCalledWith(500);
     expect(response.header).toHaveBeenCalledWith('Content-Type', 'application/json; charset=utf-8');
@@ -34,7 +34,7 @@ describe('UnhandledExceptionFilter', () => {
   });
 
   it('should send exception message of HttpException', () => {
-    unhandledExceptionFilter.catch(new HttpException('Foo Bar', 404), argumentHost);
+    globalExceptionFilter.catch(new HttpException('Foo Bar', 404), argumentHost);
 
     expect(response.code).toHaveBeenCalledWith(404);
     expect(response.header).toHaveBeenCalledWith('Content-Type', 'application/json; charset=utf-8');
@@ -47,7 +47,7 @@ describe('UnhandledExceptionFilter', () => {
   });
 
   it('should send message of message object of exceptions derived from HttpException', () => {
-    unhandledExceptionFilter.catch(new BadRequestException('Missing parameter xyz'), argumentHost);
+    globalExceptionFilter.catch(new BadRequestException('Missing parameter xyz'), argumentHost);
 
     expect(response.code).toHaveBeenCalledWith(400);
     expect(response.header).toHaveBeenCalledWith('Content-Type', 'application/json; charset=utf-8');

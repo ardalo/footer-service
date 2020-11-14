@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { AppModule } from '../app.module';
-import SwaggerUiConfigurer from './swagger-ui.configurer';
+import ApiDocumentationConfigurer from './api-documentation.configurer';
 
-describe('SwaggerUiConfigurer (e2e)', () => {
+describe('ApiDocumentationConfigurer (e2e)', () => {
   let app: NestFastifyApplication;
 
   beforeEach(async () => {
@@ -12,12 +12,12 @@ describe('SwaggerUiConfigurer (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication<NestFastifyApplication>(new FastifyAdapter());
-    SwaggerUiConfigurer.configure(app);
+    ApiDocumentationConfigurer.configure(app);
     await app.init();
   });
 
   it('should set up Swagger UI', () => {
-    return app.inject({ method: 'GET', url: '/static/index.html' })
+    return app.inject({ method: 'GET', url: '/apidoc/static/index.html' })
       .then(({ statusCode, headers, payload }) => {
         expect(statusCode).toBe(200);
         expect(headers['content-type']).toBe('text/html; charset=UTF-8');
@@ -26,11 +26,20 @@ describe('SwaggerUiConfigurer (e2e)', () => {
       });
   });
 
-  it('should make Swagger UI accessible under root path', () => {
-    return app.inject({ method: 'GET', url: '/' })
+  it('should make Swagger UI accessible under /apidoc', () => {
+    return app.inject({ method: 'GET', url: '/apidoc' })
       .then(({ statusCode, headers, payload }) => {
         expect(statusCode).toBe(302);
-        expect(headers['location']).toBe('./static/index.html');
+        expect(headers['location']).toBe('./apidoc/static/index.html');
+      });
+  });
+
+  it('should provide OpenAPI documentation', () => {
+    return app.inject({ method: 'GET', url: '/apidoc/json' })
+      .then(({ statusCode, headers, payload }) => {
+        expect(statusCode).toBe(200);
+        expect(headers['content-type']).toBe('application/json; charset=utf-8');
+        expect(JSON.parse(payload).openapi).toBe('3.0.0');
       });
   });
 });

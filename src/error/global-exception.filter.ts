@@ -2,8 +2,8 @@ import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Logge
 import { FastifyReply, RawServerBase } from 'fastify';
 
 @Catch()
-export class UnhandledExceptionFilter implements ExceptionFilter {
-  private readonly logger: Logger = new Logger(UnhandledExceptionFilter.name);
+export class GlobalExceptionFilter implements ExceptionFilter {
+  private readonly logger: Logger = new Logger(GlobalExceptionFilter.name);
 
   catch(exception: unknown, host: ArgumentsHost): any {
     const response = host.switchToHttp().getResponse<FastifyReply<RawServerBase>>();
