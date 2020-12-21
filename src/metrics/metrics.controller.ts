@@ -10,7 +10,7 @@ export default class MetricsController {
 
   @Header('Content-Type', PrometheusClient.register.contentType)
   @Get('prometheus-metrics')
-  prometheusMetrics(): string {
+  async prometheusMetrics(): Promise<string> {
     return PrometheusClient.register.metrics();
   }
 }
