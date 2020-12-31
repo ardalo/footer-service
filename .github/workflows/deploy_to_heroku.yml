@@ -8,11 +8,11 @@ on:
       - completed
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Deploy to Heroku
+      - name: Deploy to Staging
         uses: akhileshns/heroku-deploy@v3.8.8
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
@@ -20,3 +20,15 @@ jobs:
           heroku_email: "tbcollect.ableron@web.de"
           usedocker: true
           healthcheck: https://ardalo-footer-service-staging.herokuapp.com/alive
+        env:
+          HD_APP_PORT: 80
+      - name: Deploy to PROD
+        uses: akhileshns/heroku-deploy@v3.8.8
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "ardalo-footer-service-prod"
+          heroku_email: "tbcollect.ableron@web.de"
+          usedocker: true
+          healthcheck: https://ardalo-footer-service-prod.herokuapp.com/alive
+        env:
+          HD_APP_PORT: 80
