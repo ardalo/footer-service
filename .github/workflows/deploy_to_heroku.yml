@@ -1,0 +1,22 @@
+name: Deploy to Heroku
+
+on:
+  workflow_run:
+    workflows: ["Build"]
+    branches: [main]
+    types:
+      - completed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.8.8
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "ardalo-footer-service-staging"
+          heroku_email: "tbcollect.ableron@web.de"
+          usedocker: true
+          healthcheck: https://ardalo-footer-service-staging.herokuapp.com/alive
