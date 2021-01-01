@@ -17,6 +17,6 @@ async function bootstrap() {
   );
   app.useLogger(app.get(Logger));
   ApiDocumentationConfigurer.configure(app);
-  await app.listen(app.get(ConfigService).get('APP_PORT'), '0.0.0.0');
+  await app.listen(app.get(ConfigService).get('PORT'), '0.0.0.0');
 }
 bootstrap();
