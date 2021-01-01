@@ -17,7 +17,7 @@ jobs:
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "ardalo-footer-service-staging"
-          heroku_email: "tbcollect.ableron@web.de"
+          heroku_email: "email@ardalo.com"
           usedocker: true
           healthcheck: https://ardalo-footer-service-staging.herokuapp.com/alive
       - name: Deploy to PROD
@@ -25,6 +25,6 @@ jobs:
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "ardalo-footer-service-prod"
-          heroku_email: "tbcollect.ableron@web.de"
+          heroku_email: "email@ardalo.com"
           usedocker: true
           healthcheck: https://ardalo-footer-service-prod.herokuapp.com/alive
