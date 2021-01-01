@@ -1,6 +1,7 @@
 name: Deploy to Heroku
 
 on:
+  workflow_dispatch:
   workflow_run:
     workflows: ["Build"]
     branches: [main]
@@ -15,7 +16,7 @@ jobs:
       - name: Deploy to Staging
         uses: akhileshns/heroku-deploy@v3.8.8
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: "ardalo-footer-service-staging"
           heroku_email: "email@ardalo.com"
           usedocker: true
@@ -23,7 +24,7 @@ jobs:
       - name: Deploy to PROD
         uses: akhileshns/heroku-deploy@v3.8.8
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: "ardalo-footer-service-prod"
           heroku_email: "email@ardalo.com"
           usedocker: true
