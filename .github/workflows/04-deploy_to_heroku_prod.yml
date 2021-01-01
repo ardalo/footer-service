@@ -1,9 +1,9 @@
-name: Deploy to Heroku
+name: Deploy to Heroku PROD
 
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["Build"]
+    workflows: ["Deploy to Heroku Staging"]
     branches: [main]
     types:
       - completed
@@ -13,14 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Deploy to Staging
-        uses: akhileshns/heroku-deploy@v3.8.8
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: "ardalo-footer-service-staging"
-          heroku_email: "email@ardalo.com"
-          usedocker: true
-          healthcheck: https://ardalo-footer-service-staging.herokuapp.com/alive
       - name: Deploy to PROD
         uses: akhileshns/heroku-deploy@v3.8.8
         with:
