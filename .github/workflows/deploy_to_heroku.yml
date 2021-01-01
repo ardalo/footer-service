@@ -2,6 +2,15 @@ name: Deploy to Heroku
 
 on:
   workflow_dispatch:
+    inputs:
+      deploy_to_staging:
+        description: 'Deploy to Staging'
+        required: true
+        default: 'true'
+      deploy_to_prod:
+        description: 'Deploy to PROD'
+        required: true
+        default: 'false'
   workflow_run:
     workflows: ["Build"]
     branches: [main]
@@ -14,6 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Deploy to Staging
+        if: ${{ github.event.inputs.deploy_to_staging == 'true' }}
         uses: akhileshns/heroku-deploy@v3.8.8
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
@@ -22,6 +32,7 @@ jobs:
           usedocker: true
           healthcheck: https://ardalo-footer-service-staging.herokuapp.com/alive
       - name: Deploy to PROD
+        if: ${{ github.event.inputs.deploy_to_prod == 'true' }}
         uses: akhileshns/heroku-deploy@v3.8.8
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
