@@ -6,14 +6,11 @@
 Provides the footer for all public pages of the Ardalo Digital Platform.
 
 ## Tech Info
-__NodeJS Service based on NestJS and Typescript__
-* NodeJS
-* NestJS with fastify
-* Typescript
+__NodeJS Service based on Typescript and NestJS with fastify__
 * npm
-* Jest
-* Prometheus Metrics
-* Swagger UI
+* Testing: Jest
+* Metrics: Prometheus
+* API Documentation: Swagger UI
 * Access and Application Logs in JSON format
 * Static Code Analysis via SonarCloud
 * Docker
