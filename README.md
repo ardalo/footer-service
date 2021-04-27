@@ -17,15 +17,15 @@ __NodeJS Service based on Typescript and NestJS with fastify__
 * CI/CD: GitHub Actions
 
 ## Quick Start
-* Run via Docker using `docker-compose` and find API docs at `http://localhost:8082/`
+* Run via Docker using `docker compose` and find API docs at http://localhost:8082/apidoc
   ```console
-  $ docker-compose build && docker-compose up
+  $ docker compose build && docker compose up
   ```
 * Install dependencies
   ```console
   $ npm install
   ```
-* Start application and find API docs at `http://localhost:8082/`
+* Start application via `npm` and find API docs at http://localhost:8082/apidoc
   ```console
   $ npm run start
   ```
@@ -39,5 +39,4 @@ __NodeJS Service based on Typescript and NestJS with fastify__
   ```
 
 ## API Documentation
-Swagger UI is accessible via `/apidoc` (e.g. http://localhost:8082/apidoc).
-It provides an overview of all endpoints.
+Swagger UI is accessible via `/apidoc`
