@@ -18,12 +18,12 @@
     "test:e2e": "jest '\\.e2e-spec\\.ts$'"
   },
   "dependencies": {
-    "@nestjs/common": "7.6.15",
+    "@nestjs/common": "7.4.4",
     "@nestjs/config": "0.6.3",
-    "@nestjs/core": "7.6.15",
-    "@nestjs/platform-fastify": "7.6.15",
+    "@nestjs/core": "7.4.4",
+    "@nestjs/platform-fastify": "7.4.4",
     "@nestjs/swagger": "4.8.0",
-    "fastify": "3.15.0",
+    "fastify": "3.3.0",
     "fastify-swagger": "4.7.0",
     "joi": "17.4.0",
     "nestjs-pino": "1.4.0",
@@ -35,7 +35,7 @@
   "devDependencies": {
     "@nestjs/cli": "7.6.0",
     "@nestjs/schematics": "7.3.1",
-    "@nestjs/testing": "7.6.15",
+    "@nestjs/testing": "7.4.4",
     "@types/hapi__joi": "17.1.6",
     "@types/jest": "26.0.23",
     "@types/node": "15.0.0",

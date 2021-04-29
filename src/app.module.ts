@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
-import { LoggerModule } from 'nestjs-pino';
+import { LoggerModule, Params } from 'nestjs-pino';
 import { APP_FILTER } from '@nestjs/core';
 import MetricsModule from './metrics/metrics.module';
 import HealthModule from './health/health.module';
@@ -24,9 +24,8 @@ import { GlobalExceptionFilter } from './error/global-exception.filter';
     }),
     HealthModule,
     LoggerModule.forRootAsync({
-      providers: [ConfigService],
       inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
+      useFactory: (config: ConfigService): Params => ({
         pinoHttp: {
           level: config.get('LOGGER_LEVEL'),
           formatters: {
