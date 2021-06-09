@@ -1,4 +1,4 @@
-FROM node:14.15.4 as builder
+FROM node:14.17.0 as builder
 COPY package.json package-lock.json /app/
 WORKDIR /app
 RUN npm install
@@ -6,7 +6,7 @@ COPY . /app
 RUN npm run build
 RUN rm -rf node_modules && npm install --production
 
-FROM node:14.15.4-alpine
+FROM node:14.17.0-alpine
 RUN addgroup -S ardalo && adduser -S ardalo -G ardalo
 USER ardalo:ardalo
 WORKDIR /app

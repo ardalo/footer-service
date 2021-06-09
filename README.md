@@ -27,7 +27,7 @@ __NodeJS Service based on Typescript and NestJS with fastify__
   ```
 * Start application via `npm` and find API docs at http://localhost:8082/apidoc
   ```console
-  $ npm run start
+  $ npm run start:dev
   ```
 * Run all tests
   ```console
