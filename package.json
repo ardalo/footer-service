@@ -24,7 +24,7 @@
     "@nestjs/platform-fastify": "7.4.4",
     "@nestjs/swagger": "4.8.1",
     "fastify": "3.3.0",
-    "fastify-swagger": "4.7.0",
+    "fastify-swagger": "4.8.0",
     "joi": "17.4.0",
     "nestjs-pino": "1.4.0",
     "prom-client": "13.1.0",
