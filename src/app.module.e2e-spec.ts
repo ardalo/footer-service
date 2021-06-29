@@ -33,9 +33,7 @@ describe('AppModule (e2e)', () => {
     return app.inject({ method: 'GET', url: '/alive' })
       .then(() => {
         expect(loggerDestination.lastMsg).toBe('request completed');
-        expect(loggerDestination.lastObj).toMatchObject({
-          'msg': 'request completed'
-        });
+        expect(loggerDestination.lastLevel).toBe(30);
       });
   });
 });
