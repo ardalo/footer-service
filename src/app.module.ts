@@ -24,15 +24,30 @@ import { GlobalExceptionFilter } from './error/global-exception.filter';
     }),
     HealthModule,
     LoggerModule.forRootAsync({
+      imports: [ConfigService],
       inject: [ConfigService],
       useFactory: (config: ConfigService): Params => ({
+        // @see https://github.com/pinojs/pino/blob/HEAD/docs/api.md#options
         pinoHttp: {
           level: config.get('LOGGER_LEVEL'),
           formatters: {
             level: (level: string, number: number) => ({ level: level })
-          }
-        },
-        renameContext: 'className'
+          },
+          // @see default serializers: https://github.com/pinojs/pino-std-serializers/tree/master/lib
+          serializers: {
+            req: (req) => ({
+              id: req.id,
+              method: req.method,
+              url: req.url,
+              remoteAddress: req.remoteAddress
+            }),
+            res: (res) => ({
+              status: res.statusCode
+            })
+          },
+          // Set "base" to undefined to avoid adding "pid" and "hostname" properties to each log
+          base: undefined
+        }
       })
     }),
     MetricsModule
