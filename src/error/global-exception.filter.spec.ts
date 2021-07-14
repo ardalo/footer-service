@@ -20,7 +20,7 @@ describe('GlobalExceptionFilter', () => {
     jest.clearAllMocks();
   });
 
-  it('should send response for Error',  () => {
+  it('should send response for Error', () => {
     globalExceptionFilter.catch(new Error('Foo Bar'), argumentHost);
 
     expect(response.code).toHaveBeenCalledWith(500);
