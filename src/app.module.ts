@@ -14,9 +14,8 @@ import { GlobalExceptionFilter } from './error/global-exception.filter';
       envFilePath: ['.env.dist'],
       isGlobal: true,
       validationSchema: Joi.object({
-          ...appConfigValidationSchema
-        }
-      ),
+        ...appConfigValidationSchema
+      }),
       validationOptions: {
         allowUnknown: true,
         abortEarly: false
