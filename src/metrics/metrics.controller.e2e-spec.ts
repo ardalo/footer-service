@@ -5,7 +5,7 @@ import MetricsModule from './metrics.module';
 describe('MetricsController (e2e)', () => {
   let app: NestFastifyApplication;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [MetricsModule]
     }).compile();
@@ -14,13 +14,17 @@ describe('MetricsController (e2e)', () => {
     await app.init();
   });
 
+  afterAll(async () => {
+    await app.close();
+  });
+
   it('should provide prometheus metrics', () => {
     return app.inject({ method: 'GET', url: '/prometheus-metrics' })
-      .then(({ statusCode, headers, payload }) => {
-        expect(statusCode).toBe(200);
-        expect(headers['content-type']).toMatch(/^text\/plain; /);
-        expect(headers['content-type']).toContain('charset=utf-8');
-        expect(payload).toContain('nodejs_version_info');
+      .then(result => {
+        expect(result.statusCode).toBe(200);
+        expect(result.headers['content-type']).toMatch(/^text\/plain; /);
+        expect(result.headers['content-type']).toContain('charset=utf-8');
+        expect(result.payload).toContain('nodejs_version_info');
       });
   });
 });
