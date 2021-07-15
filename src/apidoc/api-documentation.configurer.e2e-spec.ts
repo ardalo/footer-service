@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
-import { AppModule } from '../app.module';
+import AppModule from '../app.module';
 import ApiDocumentationConfigurer from './api-documentation.configurer';
 
 describe('ApiDocumentationConfigurer (e2e)', () => {

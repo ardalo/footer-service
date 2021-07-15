@@ -5,8 +5,8 @@ import { ConfigService } from '@nestjs/config';
 export default class ApiDocumentationConfigurer {
   static configure(app: NestFastifyApplication): void {
     SwaggerModule.setup('apidoc', app, SwaggerModule.createDocument(app, new DocumentBuilder()
-      .setTitle(app.get(ConfigService).get('APP_NAME'))
-      .setDescription(`<a href="${app.get(ConfigService).get('APP_DOCUMENTATION_URL')}" target="_blank">Go to documentation</a>`)
+      .setTitle(app.get(ConfigService).get<string>('APP_NAME'))
+      .setDescription(`<a href="${app.get(ConfigService).get<string>('APP_DOCUMENTATION_URL')}" target="_blank">Go to documentation</a>`)
       .build()));
   }
 }
