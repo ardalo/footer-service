@@ -12,22 +12,15 @@ describe('RequestContext', () => {
     });
   });
 
-  describe('runWithRequestContext()', () => {
-    it('should return result of provided callable', () => {
-      expect(RequestContext.runWithRequestContext(null, null, () => { return 'test result'; }))
-        .toBe('test result');
-    });
-  });
-
   describe('current()', () => {
-    it('should return current request context when called within active session', () => {
+    it('should return current request context when called within active request context', () => {
       RequestContext.runWithRequestContext(null, null, () => {
         expect(RequestContext.current()).not.toBeNull();
       });
     });
 
-    it('should return null when called outside an active session', () => {
-      expect(RequestContext.current()).toBeNull();
+    it('should return undefined when called outside active request context', () => {
+      expect(RequestContext.current()).toBeUndefined();
     });
   });
 

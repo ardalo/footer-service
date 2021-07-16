@@ -17,7 +17,7 @@ export default class AccessLoggerMiddleware implements NestMiddleware<IncomingMe
         'timestamp': Date.now(),
         'type': 'access',
         'req': {
-          'id': RequestContext.current().getRequest().id,
+          'id': RequestContext.current()?.getRequest().id,
           'method': req.method,
           'url': req.url,
           'remoteAddress': req.socket?.remoteAddress

@@ -1,23 +1,20 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import * as cls from 'cls-hooked';
+const { als } = require('asynchronous-local-storage');
 
 export default class RequestContext {
-  private static CLS_NAMESPACE = 'app-request-context';
-
   private constructor(
     private readonly request: IncomingMessage,
     private readonly response: ServerResponse) {}
 
   public static runWithRequestContext(request: IncomingMessage, response: ServerResponse, callable: () => void): any {
-    return this.clsNamespace().runAndReturn(() => {
-      this.clsNamespace().set(RequestContext.name, new RequestContext(request, response));
-      return callable();
+    return als.runWith(() => {
+      als.set(RequestContext.name, new RequestContext(request, response));
+      callable();
     });
   }
 
   public static current(): RequestContext {
-    const clsNamespace = this.clsNamespace();
-    return (clsNamespace && clsNamespace.active) ? clsNamespace.get(RequestContext.name) : null;
+    return als.get(RequestContext.name);
   }
 
   public getRequest(): IncomingMessage {
@@ -29,14 +26,10 @@ export default class RequestContext {
   }
 
   public getAttribute(attributeName: string): any {
-    return RequestContext.clsNamespace().get(attributeName);
+    return als.get(attributeName);
   }
 
   public setAttribute(attributeName: string, attributeValue: any): void {
-    RequestContext.clsNamespace().set(attributeName, attributeValue);
-  }
-
-  private static clsNamespace(): any {
-    return cls.getNamespace(RequestContext.CLS_NAMESPACE) || cls.createNamespace(RequestContext.CLS_NAMESPACE);
+    als.set(attributeName, attributeValue);
   }
 }
