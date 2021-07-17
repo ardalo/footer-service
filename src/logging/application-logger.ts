@@ -1,6 +1,6 @@
-import { Injectable, LoggerService, LogLevel } from '@nestjs/common';
-import RequestContext from '../request-context/request-context';
+import { Injectable, LogLevel, LoggerService } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import RequestContext from '../request-context/request-context';
 
 @Injectable()
 export default class ApplicationLogger implements LoggerService {
@@ -13,11 +13,11 @@ export default class ApplicationLogger implements LoggerService {
   private logStream: NodeJS.WritableStream = process.stdout;
 
   constructor(configService: ConfigService) {
-    this.logLevel = configService.get<string>('LOGGER_LEVEL')?.toUpperCase() || 'INFO'
-    this.debugEnabled = this.logLevel === 'DEBUG'
-    this.infoEnabled = this.debugEnabled || this.logLevel === 'INFO'
-    this.warnEnabled = this.infoEnabled || this.logLevel === 'WARN'
-    this.errorEnabled = this.warnEnabled || this.logLevel === 'ERROR'
+    this.logLevel = configService.get<string>('LOGGER_LEVEL')?.toUpperCase() || 'INFO';
+    this.debugEnabled = this.logLevel === 'DEBUG';
+    this.infoEnabled = this.debugEnabled || this.logLevel === 'INFO';
+    this.warnEnabled = this.infoEnabled || this.logLevel === 'WARN';
+    this.errorEnabled = this.warnEnabled || this.logLevel === 'ERROR';
   }
 
   setLogStream(logStream: NodeJS.WritableStream): void {
@@ -26,25 +26,29 @@ export default class ApplicationLogger implements LoggerService {
 
   error(message: any, ...optionalParams: any[]): any {
     if (this.errorEnabled) {
-      this.writeLogEntry('ERROR', message)
+      const context = this.getContext(optionalParams);
+      this.writeLogEntry('ERROR', message, context);
     }
   }
 
   warn(message: any, ...optionalParams: any[]): any {
     if (this.warnEnabled) {
-      this.writeLogEntry('WARN', message)
+      const context = this.getContext(optionalParams);
+      this.writeLogEntry('WARN', message, context);
     }
   }
 
   log(message: any, ...optionalParams: any[]): any {
     if (this.infoEnabled) {
-      this.writeLogEntry('INFO', message)
+      const context = this.getContext(optionalParams);
+      this.writeLogEntry('INFO', message, context);
     }
   }
 
   debug(message: any, ...optionalParams: any[]): any {
     if (this.debugEnabled) {
-      this.writeLogEntry('DEBUG', message)
+      const context = this.getContext(optionalParams);
+      this.writeLogEntry('DEBUG', message, context);
     }
   }
 
@@ -56,13 +60,24 @@ export default class ApplicationLogger implements LoggerService {
     throw Error('Not implemented');
   }
 
-  private writeLogEntry(level: string, message: string): void {
+  private writeLogEntry(level: string, message: string, context?: string): void {
     this.logStream.write(JSON.stringify({
       'timestamp': Date.now(),
       'type': 'application',
       'level': level,
       'message': message,
-      'requestId': RequestContext.current()?.getRequest()?.id
+      'requestId': RequestContext.current()?.getRequest()?.id,
+      'context': context || undefined
     }) + this.LINE_BREAK);
+  }
+
+  private getContext(args: any[]): string {
+    if (args && args.length) {
+      const lastElement = args[args.length - 1];
+      const isContext = typeof lastElement === 'string';
+      return isContext ? lastElement : undefined;
+    }
+
+    return undefined;
   }
 }
