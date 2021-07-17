@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from 'http';
-const { als } = require('asynchronous-local-storage');
+import als from 'asynchronous-local-storage';
 
 export default class RequestContext {
   private constructor(
