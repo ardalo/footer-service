@@ -1,6 +1,6 @@
+import { IncomingMessage, ServerResponse } from 'http';
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import RequestContext from '../request-context/request-context';
-import { IncomingMessage, ServerResponse } from 'http';
 
 @Injectable()
 export default class AccessLoggerMiddleware implements NestMiddleware<IncomingMessage, ServerResponse> {

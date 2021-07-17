@@ -1,6 +1,6 @@
+import * as stream from 'stream';
 import { ConfigService } from '@nestjs/config';
 import ApplicationLogger from './application-logger';
-import * as stream from 'stream';
 
 describe('ApplicationLogger', () => {
   const logStream = new stream.Writable();
@@ -46,7 +46,7 @@ describe('ApplicationLogger', () => {
     const logger = new ApplicationLogger(new ConfigService({
       'LOGGER_LEVEL': logLevel
     }));
-    logger.setLogStream(logStream)
+    logger.setLogStream(logStream);
     writeLog(logger);
 
     expect(logCapture)
@@ -55,12 +55,12 @@ describe('ApplicationLogger', () => {
 
   it('should throw Error on setLogLevels()', () => {
     const logger = new ApplicationLogger(new ConfigService());
-    expect(() => logger.setLogLevels(['error'])).toThrowError('Not implemented')
+    expect(() => logger.setLogLevels(['error'])).toThrowError('Not implemented');
   });
 
   it('should throw Error on verbose()', () => {
     const logger = new ApplicationLogger(new ConfigService());
-    expect(() => logger.verbose('test message')).toThrowError('Not implemented')
+    expect(() => logger.verbose('test message')).toThrowError('Not implemented');
   });
 
   //TODO: test context, stacktrace and requestId

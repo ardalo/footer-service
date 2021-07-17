@@ -3,6 +3,6 @@ import ApplicationLogger from './application-logger';
 
 @Module({
   providers: [ApplicationLogger],
-  exports: [ApplicationLogger],
+  exports: [ApplicationLogger]
 })
 export default class ApplicationLoggerModule {}
