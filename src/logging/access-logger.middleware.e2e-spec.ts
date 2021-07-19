@@ -17,16 +17,29 @@ describe('AccessLoggerMiddleware (e2e)', () => {
     await app.init();
   });
 
+  beforeEach(() => {
+    processStdoutSpy.mockReset();
+  });
+
   afterAll(async () => {
     processStdoutSpy.mockRestore();
     await app.close();
   });
 
   it('should write access logs with request id', () => {
+    return app.inject({ method: 'GET', url: '/prometheus-metrics' })
+      .then(result => {
+        expect(processStdoutSpy.mock.calls[0][0])
+          .toMatch(/{"timestamp":\d{13},"type":"access","req":{"id":"req-\d","method":"GET","url":"\/prometheus-metrics","remoteAddress":"127\.0\.0\.1"},"res":{"status":200,"contentLength":\d+}}/);
+        expect(result.statusCode).toBe(200);
+      });
+  });
+
+  it('should write access logs with content length 0', () => {
     return app.inject({ method: 'GET', url: '/alive' })
       .then(result => {
         expect(processStdoutSpy.mock.calls[0][0])
-          .toMatch(/{"timestamp":\d{13},"type":"access","req":{"id":"req-1","method":"GET","url":"\/alive","remoteAddress":"127\.0\.0\.1"},"res":{"status":200}}/);
+          .toMatch(/{"timestamp":\d{13},"type":"access","req":{"id":"req-\d","method":"GET","url":"\/alive","remoteAddress":"127\.0\.0\.1"},"res":{"status":200,"contentLength":0}}/);
         expect(result.statusCode).toBe(200);
       });
   });

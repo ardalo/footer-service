@@ -66,7 +66,6 @@ export default class ApplicationLogger implements LoggerService {
       'type': 'application',
       'level': level,
       'message': message,
-      // @ts-ignore
       'requestId': RequestContext.current()?.getRequest()?.id,
       'context': context || undefined
     }) + this.LINE_BREAK);

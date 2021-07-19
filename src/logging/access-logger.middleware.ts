@@ -1,9 +1,9 @@
-import { IncomingMessage, ServerResponse } from 'http';
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import RequestContext from '../request-context/request-context';
+import { FastifyReply, FastifyRequest } from 'fastify';
 
 @Injectable()
-export default class AccessLoggerMiddleware implements NestMiddleware<IncomingMessage, ServerResponse> {
+export default class AccessLoggerMiddleware implements NestMiddleware<FastifyRequest, FastifyReply> {
   private readonly LINE_BREAK = '\n';
   private logStream: NodeJS.WritableStream = process.stdout;
 
@@ -11,7 +11,8 @@ export default class AccessLoggerMiddleware implements NestMiddleware<IncomingMe
     this.logStream = logStream;
   }
 
-  use(req: IncomingMessage, res: ServerResponse, next: () => void): any {
+  use(req: FastifyRequest, res: FastifyReply, next: () => void): any {
+    // @ts-ignore
     res.on('finish', () => {
       this.logStream.write(JSON.stringify({
         'timestamp': Date.now(),
@@ -23,7 +24,8 @@ export default class AccessLoggerMiddleware implements NestMiddleware<IncomingMe
           'remoteAddress': req.socket?.remoteAddress
         },
         'res': {
-          'status': res.statusCode
+          'status': res.statusCode,
+          'contentLength': Number(res.getHeader('content-length'))
         }
       }) + this.LINE_BREAK);
     });

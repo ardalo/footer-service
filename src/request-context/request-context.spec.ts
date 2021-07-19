@@ -1,10 +1,10 @@
-import { IncomingMessage, ServerResponse } from 'http';
 import RequestContext from './request-context';
+import { FastifyReply, FastifyRequest } from 'fastify';
 
 describe('RequestContext', () => {
   it('should provide access to request and response', () => {
-    const request = new IncomingMessage(null);
-    const response = new ServerResponse(request);
+    const request = {} as FastifyRequest;
+    const response = {} as FastifyReply;
 
     RequestContext.runWithRequestContext(request, response, () => {
       expect(RequestContext.current().getRequest()).toBe(request);
