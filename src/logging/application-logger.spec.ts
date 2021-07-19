@@ -1,5 +1,6 @@
 import * as stream from 'stream';
 import { ConfigService } from '@nestjs/config';
+import { Logger } from '@nestjs/common';
 import ApplicationLogger from './application-logger';
 
 describe('ApplicationLogger', () => {
@@ -18,30 +19,30 @@ describe('ApplicationLogger', () => {
   });
 
   it.each([
-    ['ERROR', (logger) => logger.error('.'), /{"timestamp":\d{13},"type":"application","level":"ERROR","message":"."}/],
-    ['ERROR', (logger) => logger.warn('.'), /^$/],
-    ['ERROR', (logger) => logger.log('.'), /^$/],
-    ['ERROR', (logger) => logger.debug('.'), /^$/],
+    ['ERROR', (logger) => logger.error('msg'), /{"timestamp":\d{13},"type":"application","level":"ERROR","message":"msg"}/],
+    ['ERROR', (logger) => logger.warn('msg'), /^$/],
+    ['ERROR', (logger) => logger.log('msg'), /^$/],
+    ['ERROR', (logger) => logger.debug('msg'), /^$/],
 
-    ['WARN', (logger) => logger.error('.'), /{"timestamp":\d{13},"type":"application","level":"ERROR","message":"."}/],
-    ['WARN', (logger) => logger.warn('.'), /{"timestamp":\d{13},"type":"application","level":"WARN","message":"."}/],
-    ['WARN', (logger) => logger.log('.'), /^$/],
-    ['WARN', (logger) => logger.debug('.'), /^$/],
+    ['WARN', (logger) => logger.error('msg'), /{"timestamp":\d{13},"type":"application","level":"ERROR","message":"msg"}/],
+    ['WARN', (logger) => logger.warn('msg'), /{"timestamp":\d{13},"type":"application","level":"WARN","message":"msg"}/],
+    ['WARN', (logger) => logger.log('msg'), /^$/],
+    ['WARN', (logger) => logger.debug('msg'), /^$/],
 
-    ['INFO', (logger) => logger.error('.'), /{"timestamp":\d{13},"type":"application","level":"ERROR","message":"."}/],
-    ['INFO', (logger) => logger.warn('.'), /{"timestamp":\d{13},"type":"application","level":"WARN","message":"."}/],
-    ['INFO', (logger) => logger.log('.'), /{"timestamp":\d{13},"type":"application","level":"INFO","message":"."}/],
-    ['INFO', (logger) => logger.debug('.'), /^$/],
+    ['INFO', (logger) => logger.error('msg'), /{"timestamp":\d{13},"type":"application","level":"ERROR","message":"msg"}/],
+    ['INFO', (logger) => logger.warn('msg'), /{"timestamp":\d{13},"type":"application","level":"WARN","message":"msg"}/],
+    ['INFO', (logger) => logger.log('msg'), /{"timestamp":\d{13},"type":"application","level":"INFO","message":"msg"}/],
+    ['INFO', (logger) => logger.debug('msg'), /^$/],
 
-    ['DEBUG', (logger) => logger.error('.'), /{"timestamp":\d{13},"type":"application","level":"ERROR","message":"."}/],
-    ['DEBUG', (logger) => logger.warn('.'), /{"timestamp":\d{13},"type":"application","level":"WARN","message":"."}/],
-    ['DEBUG', (logger) => logger.log('.'), /{"timestamp":\d{13},"type":"application","level":"INFO","message":"."}/],
-    ['DEBUG', (logger) => logger.debug('.'), /{"timestamp":\d{13},"type":"application","level":"DEBUG","message":"."}/],
+    ['DEBUG', (logger) => logger.error('msg'), /{"timestamp":\d{13},"type":"application","level":"ERROR","message":"msg"}/],
+    ['DEBUG', (logger) => logger.warn('msg'), /{"timestamp":\d{13},"type":"application","level":"WARN","message":"msg"}/],
+    ['DEBUG', (logger) => logger.log('msg'), /{"timestamp":\d{13},"type":"application","level":"INFO","message":"msg"}/],
+    ['DEBUG', (logger) => logger.debug('msg'), /{"timestamp":\d{13},"type":"application","level":"DEBUG","message":"msg"}/],
 
-    ['OFF', (logger) => logger.error('.'), /^$/],
-    ['OFF', (logger) => logger.warn('.'), /^$/],
-    ['OFF', (logger) => logger.log('.'), /^$/],
-    ['OFF', (logger) => logger.debug('.'), /^$/]
+    ['OFF', (logger) => logger.error('msg'), /^$/],
+    ['OFF', (logger) => logger.warn('msg'), /^$/],
+    ['OFF', (logger) => logger.log('msg'), /^$/],
+    ['OFF', (logger) => logger.debug('msg'), /^$/]
   ])('should only write log entry if log level is appropriate', (logLevel, writeLog, expectedLogEntryRegexp) => {
     const logger = new ApplicationLogger(new ConfigService({
       'LOGGER_LEVEL': logLevel
@@ -63,5 +64,23 @@ describe('ApplicationLogger', () => {
     expect(() => logger.verbose('test message')).toThrowError('Not implemented');
   });
 
-  //TODO: test context, stacktrace and requestId
+  it('should add context to log entries if available', () => {
+    const logger = new ApplicationLogger(new ConfigService());
+    logger.setLogStream(logStream);
+    Logger.overrideLogger(logger);
+    new Logger('Test Context').log('test message');
+
+    expect(logCapture)
+      .toMatch(/{"timestamp":\d{13},"type":"application","level":"INFO","message":"test message","context":"Test Context"}/);
+  });
+
+  it('should omit context in log entries if not available', () => {
+    const logger = new ApplicationLogger(new ConfigService());
+    logger.setLogStream(logStream);
+    Logger.overrideLogger(logger);
+    new Logger().log('test message');
+
+    expect(logCapture)
+      .toMatch(/{"timestamp":\d{13},"type":"application","level":"INFO","message":"test message"}/);
+  });
 });
