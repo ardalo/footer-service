@@ -1,12 +1,12 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Logger } from '@nestjs/common';
-import { FastifyReply, RawServerBase } from 'fastify';
+import { FastifyReply } from 'fastify';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
   private readonly logger: Logger = new Logger(GlobalExceptionFilter.name);
 
   catch(exception: unknown, host: ArgumentsHost): any {
-    const response = host.switchToHttp().getResponse<FastifyReply<RawServerBase>>();
+    const response = host.switchToHttp().getResponse<FastifyReply>();
     const responseStatus = this.getResponseStatus(exception);
 
     if (!this.isHttpException(exception)) {
