@@ -8,7 +8,7 @@ import { appConfigValidationSchema } from './app.config';
 import { GlobalExceptionFilter } from './error/global-exception.filter';
 import ApplicationLoggerModule from './logging/application-logger.module';
 import AccessLoggerMiddleware from './logging/access-logger.middleware';
-import RequestContextMiddleware from './request-context/request-context.middleware';
+import requestContextMiddleware from './request-context/request-context.middleware';
 
 @Module({
   imports: [
@@ -37,7 +37,7 @@ import RequestContextMiddleware from './request-context/request-context.middlewa
 export default class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): any {
     consumer
-      .apply(RequestContextMiddleware).forRoutes('(.*)')
+      .apply(requestContextMiddleware).forRoutes('(.*)')
       .apply(AccessLoggerMiddleware).forRoutes('(.*)');
   }
 }

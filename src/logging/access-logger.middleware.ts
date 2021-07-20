@@ -24,8 +24,7 @@ export default class AccessLoggerMiddleware implements NestMiddleware<FastifyReq
           'remoteAddress': req.socket?.remoteAddress
         },
         'res': {
-          'status': res.statusCode,
-          'contentLength': Number(res.getHeader('content-length'))
+          'status': res.statusCode
         }
       }) + this.LINE_BREAK);
     });
